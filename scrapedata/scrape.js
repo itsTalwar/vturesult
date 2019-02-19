@@ -15,6 +15,7 @@ function captchaErr(html) {
 const processdata = (html,usn) => {
     if(captchaErr(html) == 1) {
         console.log("captcha err")
+        return -1;
     }
     else{
         var $ = cheerio.load(html);
@@ -24,21 +25,20 @@ const processdata = (html,usn) => {
             const item = $(el).text();
             allmarks.push(item);
         })       
-        allmarks.splice(0,6);
-        allmarks.splice(allmarks.length - 5, allmarks.length);
         var tempObj = {};
         for(var i = 0; i < allmarks.length; i += 6){
-            tempObj = {
-                subCode: allmarks[i],
-                subName: allmarks[i+1],
-                ia: allmarks[i+2],
-                ex: allmarks[i+3],
-                tot: allmarks[i+4],
-                res: allmarks[i+5]
-            }
-            marks.push(tempObj);
+            if(allmarks[i] !== 'Subject Code' && allmarks[i] !== 'P -> PASS'){
+                tempObj = {
+                    subCode: allmarks[i],
+                    subName: allmarks[i+1],
+                    ia: allmarks[i+2],
+                    ex: allmarks[i+3],
+                    tot: allmarks[i+4],
+                    res: allmarks[i+5]
+                }
+                marks.push(tempObj);
+            }           
         }
-        console.log("marks", marks);
         var finObj = {
             usn: usn,
             marks: marks
