@@ -1,44 +1,62 @@
 const cheerio  = require('cheerio');
+const request = require('request')
 
+const captchaErrPatt = `alert('Invalid captcha code !!!')`
 
-const subpatt = /([1-9][1-9][M][A][T][1-9][1-9])|([1-9][1-9][C][S][1-9][1-9][1-9])|([1-9][1-9][C][S][1-9][1-9])|([1-9][1-9][C][S][L][1-9][1-9])/g;
-const markspattconj = /[0-9][0-9][0-9][0-9][0-9][0-9]/g;
-const markspatt = /[0-9][0-9]/g;
-const usnpatt = /[1][A][Y][0-9][0-9][C][S][0-9][0-9][0-9]/;
-
-
-const splitter = (marksconj, subjects) => {
-    var marksub = {};
-    var marks = [];
-    var sub = {};
-    var i = 0;
-
-    for(var i = 0 ; i < marksconj.length ; i++){
-        var temp = marksconj[i].match(markspatt);
-        marksub = { 
-            ia: temp[0],
-            ex: temp[1],
-            tot: temp[2]
-        }
-        marks.push(marksub);
-    }
-
-    return marks;
-} 
-const processdata = (html,usn) => {
+function captchaErr(html) {
     var $ = cheerio.load(html);
-    var subjects = [];
-    var marks = {};
-    var marksconj = [];
-    var main = $(".panel-body > .row");
-    var temp = main.find('tbody').find('td').text();
-
-    var mainTable = main.find('.divTable').find('.divTableRow').find('.divTableCell').text();
-    var subjects = mainTable.match(subpatt); 
-    marksconj = mainTable.match(markspattconj);
-    marks = splitter(marksconj, subjects);
-    return {marks: marks , usn: usn };
+    var index = html.indexOf(captchaErrPatt)
+    if(index == -1){
+        return 0
+    }
+    return 1;
 }
+
+const processdata = (html,usn) => {
+    if(captchaErr(html) == 1) {
+        console.log("captcha err")
+    }
+    else{
+        var $ = cheerio.load(html);
+        var allmarks = [];
+        var marks = [];
+        $(".divTableCell").each((i, el)=> {
+            const item = $(el).text();
+            allmarks.push(item);
+        })       
+        allmarks.splice(0,6);
+        allmarks.splice(allmarks.length - 5, allmarks.length);
+        var tempObj = {};
+        for(var i = 0; i < allmarks.length; i += 6){
+            tempObj = {
+                subCode: allmarks[i],
+                subName: allmarks[i+1],
+                ia: allmarks[i+2],
+                ex: allmarks[i+3],
+                tot: allmarks[i+4],
+                res: allmarks[i+5]
+            }
+            marks.push(tempObj);
+        }
+        console.log("marks", marks);
+        var finObj = {
+            usn: usn,
+            marks: marks
+        }
+        console.log(finObj);
+        return finObj;
+    }   
+}
+
+
+
+//******************************** */test env********************************//
+// html = request('http://localhost/resultSample.html', function (error, response, body) {
+//     usn = '1AY16CS121'
+//     var res = processdata(body, usn);
+// })
+
+/*****************************************************************************/
 
 module.exports ={
     processdata: processdata
