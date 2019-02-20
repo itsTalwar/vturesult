@@ -2,9 +2,10 @@ const fetchData = require('./sendreq/fetchData.js');
 const fetchUSN = require('./fetchusn/retrievecsv.js')
 const scrapeData = require('./scrapedata/scrape.js')
 const addToDatabase = require('./database/addToDatabase')
+const addToCsv = require('./toCsv/addToCsv')
 
-const cookie = "jjqg2d3aja5pjs4lhp2n391b25"; 
-var captcha = 28412;
+const cookie = "q4im7j9ekre6gcjdg78hbeguu1"; 
+var captcha = 75431;
 
 
 
@@ -18,6 +19,7 @@ const gettingData = (usn)=>{
             else{
                 try{
                     addToDatabase.addToDatabase(obj);
+                    addToCsv.addToCsv(obj);
                 }
                 catch(err) {
                     throw err;
