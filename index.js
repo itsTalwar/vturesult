@@ -7,8 +7,6 @@ const addToCsv = require('./toCsv/addToCsv')
 // const cookie = "q4im7j9ekre6gcjdg78hbeguu1"; 
 // var captcha = 75431;
 
-
-
 const gettingData = (usn, captcha, cookie)=>{
     fetchData.fetchData(cookie,usn,captcha)
         .then((data)=>{
@@ -45,8 +43,6 @@ const getAllResults = (captcha, cookie)=> {
         })
 }
 
-
-
-   
-
-getAllResults();
+module.exports = {
+    getAllResults
+}
