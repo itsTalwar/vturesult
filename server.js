@@ -18,9 +18,6 @@ app.post('/extract', (req, res) => {
     console.log('req', req.body)
     var captcha = req.body.captcha;
     var cookie = req.body.cookie;
-    index.getAllResults(captcha, cookie)
-    res.send({
-        status: 200,
-        mess: "donasd"
-    })
+    index.getAllResults(captcha, cookie);
+    res.send('done')
 })
