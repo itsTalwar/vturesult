@@ -4,12 +4,10 @@ const scrapeData = require('./scrapedata/scrape.js')
 const addToDatabase = require('./database/addToDatabase')
 const addToCsv = require('./toCsv/addToCsv')
 
-const cookie = "q4im7j9ekre6gcjdg78hbeguu1"; 
-var captcha = 75431;
+// const cookie = "q4im7j9ekre6gcjdg78hbeguu1"; 
+// var captcha = 75431;
 
-
-
-const gettingData = (usn)=>{
+const gettingData = (usn, captcha, cookie)=>{
     fetchData.fetchData(cookie,usn,captcha)
         .then((data)=>{
             var obj = scrapeData.processdata(data,usn);
@@ -32,12 +30,12 @@ const gettingData = (usn)=>{
         })
 }
 
-const getAllResults = ()=> {
+const getAllResults = (captcha, cookie)=> {
     fetchUSN.usnArray()
         .then((usn)=>{
             for(var i = 0 ; i < usn.length ; i++){
                 var temp = usn[i][0];
-                gettingData(temp);
+                gettingData(temp, captcha, cookie);
             }
         })
         .catch((usn) => {
@@ -45,8 +43,6 @@ const getAllResults = ()=> {
         })
 }
 
-
-
-   
-
-getAllResults();
+module.exports = {
+    getAllResults
+}
