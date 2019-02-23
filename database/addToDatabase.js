@@ -10,9 +10,8 @@ const addToDatabase = (obj) => {
         obj.marks.map((temp) => {
             subCode = temp.subCode;
             ia = temp.ia;
-            ex = temp.ex;
-            tot = temp.tot;
-            var sql = `INSERT INTO marks VALUES ('${usn}','${subCode}','${ia}','${ex}','${tot}')`;
+            grade = temp.grade;
+            var sql = `INSERT INTO marks VALUES ('${usn}','${subCode}','${ia}','${grade}')`;
             con.query(sql, (err, result) => {
                 if (err) throw err;
                 else console.log("1 record inserted");

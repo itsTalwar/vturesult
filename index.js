@@ -4,9 +4,6 @@ const scrapeData = require('./scrapedata/scrape.js')
 const addToDatabase = require('./database/addToDatabase')
 const addToCsv = require('./toCsv/addToCsv')
 
-// const cookie = "q4im7j9ekre6gcjdg78hbeguu1"; 
-// var captcha = 75431;
-
 const gettingData = (usn, captcha, cookie)=>{
     fetchData.fetchData(cookie,usn,captcha)
         .then((data)=>{
@@ -17,7 +14,7 @@ const gettingData = (usn, captcha, cookie)=>{
             else{
                 try{
                     addToDatabase.addToDatabase(obj);
-                    addToCsv.addToCsv(obj);
+                    // addToCsv.addToCsv(obj);
                 }
                 catch(err) {
                     throw err;
@@ -26,6 +23,7 @@ const gettingData = (usn, captcha, cookie)=>{
             
         })
         .catch((err) => {
+            throw(err);
             console.log("error encountered while fetching data ")
         })
 }
@@ -42,6 +40,11 @@ const getAllResults = (captcha, cookie)=> {
             console.log("err getting usns");
         })
 }
+
+const cookie = "urcaf3p3vjoaaisg8tclldkl01"; 
+var captcha = 93225;
+getAllResults(captcha, cookie)
+
 
 module.exports = {
     getAllResults
