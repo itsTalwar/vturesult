@@ -7,7 +7,7 @@ const createColumns = require('./toCsv/createColumns')
 
 var colCreated = false;
 
-const gettingData = (usn, captcha, cookie,token)=>{    
+const gettingData = (usn, captcha, cookie)=>{    
     fetchData.fetchData(cookie,usn,captcha,token)
         .then((data)=>{
             var obj = scrapeData.processdata(data,usn);
@@ -38,12 +38,12 @@ const gettingData = (usn, captcha, cookie,token)=>{
         })
 }
 
-const getAllResults = (captcha, cookie, token)=> {
-    fetchUSN.usnArray()
+const getAllResults = (captcha, cookie, csv)=> {
+    fetchUSN.usnArray(csv)
         .then((usn)=>{
             for(var i = 0 ; i < usn.length ; i++){
                 var temp = usn[i][0];
-                gettingData(temp, captcha, cookie,token);
+                gettingData(temp, captcha, cookie);
             }
         })
         .catch((usn) => {
@@ -52,9 +52,9 @@ const getAllResults = (captcha, cookie, token)=> {
 }
 
 const cookie = "ou76eorctub9v9m42tp7pd9di3"; 
-var captcha = 44646;
+var captcha = 97265;
 var token = "ZnFsc29VYURHVE1YK1F1ZEE4ZlRTZjhJN0ZBMzBmNDlGTEdHV2lvOHZSU2tEekZQc2Q3WUtzbldtMG96akZKWEpxb3g2czg0cUFiQlN3S05LbDNRa3c9PTo6AzBjvUeMnoLa+CMU8XGQNg=="
-getAllResults(captcha, cookie, token)
+// getAllResults(captcha, cookie, token)
 
 
 module.exports = {

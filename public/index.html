@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <body>
-    <form action="http://localhost:8000/extract" method="POST">
+    <form action="http://localhost:8000/extract" method="POST" enctype="multipart/form-data">
         <div>
           <label for="captcha">Captcha</label>
           <input type="text" placeholder="Enter captcha" name="captcha" required>
@@ -9,10 +9,11 @@
           <label for="cookie">Cookie</label>
           <input type="text" placeholder="Enter cookie" name="cookie" required>
           <br>
-          <label for="cookie">Token</label>
+          <!-- <label for="cookie">Token</label>
           <input type="text" placeholder="Enter token" name="token" required>
+          <br> -->
+          <input type="file" id="docpicker" name="csv" accept=".csv" required>
           <br>
-
           <button type="submit">submit</button>
         </div>
       </form>

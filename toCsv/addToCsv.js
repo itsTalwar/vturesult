@@ -1,7 +1,7 @@
 const addToCsv = (obj) => {
     // console.log("obj = ",obj )
     const fs = require('fs');
-    const writeStream = fs.createWriteStream('./toCsv/marks.csv',{flags:'a'});
+    const writeStream = fs.createWriteStream('./public/marks.csv',{flags:'a'});
     var usn = obj.usn;
     var grades = [];
     grades = obj.marks.map((temp) => {

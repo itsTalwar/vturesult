@@ -1,6 +1,6 @@
 const createColumns = (obj) => {
     const fs = require('fs');
-    const writeStream = fs.createWriteStream('./toCsv/marks.csv',{flags:'a'});
+    const writeStream = fs.createWriteStream('./public/marks.csv',{flags:'a'});
     const usn = obj.usn;
     var subcodes = [];
     subCodes = obj.marks.map((temp) => {
