@@ -46,6 +46,7 @@ const processdata = (html,usn) => {
             }
             console.log("The file was saved!");
         }); 
+        console.log(html)
         var $ = cheerio.load(html);
         var allmarks = [];
         var marks = [];

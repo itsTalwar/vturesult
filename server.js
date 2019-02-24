@@ -18,6 +18,7 @@ app.post('/extract', (req, res) => {
     console.log('req', req.body)
     var captcha = req.body.captcha;
     var cookie = req.body.cookie;
-    index.getAllResults(captcha, cookie);
+    var token = req.body.token
+    index.getAllResults(captcha, cookie,token);
     res.send('done')
 })

@@ -3,12 +3,9 @@ const fetchData = (cookie,usn,captcha,token)=> {
     var headers  = {
         "Origin": "http://results.vtu.ac.in",
         "Upgrade-Insecure-Requests": 1,
-        "Content-Type": "application/x-www-form-urlencoded",
         "User-Agent":" Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/72.0.3626.109 Safari/537.36",
         "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
         "Referer": "http://results.vtu.ac.in/resultsvitavicbcs_19/index.php",
-        "Accept-Encoding": "gzip, deflate",
-        "Accept-Language": "en-US,en;q=0.9,hi-IN;q=0.8,hi;q=0.7",
         "Cookie": `PHPSESSID=${cookie}`
     };
     
@@ -26,6 +23,7 @@ const fetchData = (cookie,usn,captcha,token)=> {
             headers: headers,
             formData :myJSONObject
         }, function (error, response, body){
+            console.log(body)
             resolve(body);
         });
        })
