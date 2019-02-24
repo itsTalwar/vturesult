@@ -3,24 +3,32 @@ const fetchUSN = require('./fetchusn/retrievecsv.js')
 const scrapeData = require('./scrapedata/scrape.js')
 const addToDatabase = require('./database/addToDatabase')
 const addToCsv = require('./toCsv/addToCsv')
+const createColumns = require('./toCsv/createColumns')
 
-const gettingData = (usn, captcha, cookie,token)=>{
+var colCreated = false;
+
+const gettingData = (usn, captcha, cookie,token)=>{    
     fetchData.fetchData(cookie,usn,captcha,token)
         .then((data)=>{
             var obj = scrapeData.processdata(data,usn);
-            console.log(obj)
             if(obj === -1){
                 console.log("something went wrong")
             }
             else{
-                try{
-                    console.log(obj)
-                    // addToDatabase.addToDatabase(obj);
-                    // addToCsv.addToCsv(obj);
+                if(colCreated == true){
+                    try {
+                        addToDatabase.addToDatabase(obj);
+                        addToCsv.addToCsv(obj);
+                    }
+                    catch(err) {
+                        throw err;
+                    }
                 }
-                catch(err) {
-                    throw err;
+                else {
+                    createColumns.createColumns(obj);
+                    colCreated = true;
                 }
+                
             }
             
         })
@@ -30,7 +38,7 @@ const gettingData = (usn, captcha, cookie,token)=>{
         })
 }
 
-const getAllResults = (captcha, cookie,token)=> {
+const getAllResults = (captcha, cookie, token)=> {
     fetchUSN.usnArray()
         .then((usn)=>{
             for(var i = 0 ; i < usn.length ; i++){
@@ -43,9 +51,10 @@ const getAllResults = (captcha, cookie,token)=> {
         })
 }
 
-const cookie = "urcaf3p3vjoaaisg8tclldkl01"; 
-var captcha = 93225;
-// getAllResults(captcha, cookie)
+const cookie = "ou76eorctub9v9m42tp7pd9di3"; 
+var captcha = 44646;
+var token = "ZnFsc29VYURHVE1YK1F1ZEE4ZlRTZjhJN0ZBMzBmNDlGTEdHV2lvOHZSU2tEekZQc2Q3WUtzbldtMG96akZKWEpxb3g2czg0cUFiQlN3S05LbDNRa3c9PTo6AzBjvUeMnoLa+CMU8XGQNg=="
+getAllResults(captcha, cookie, token)
 
 
 module.exports = {
