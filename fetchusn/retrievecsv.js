@@ -13,8 +13,7 @@ const usnData =(csv)=>{
     obj.from.path(relCsv).to.array((data)=>{
         for(var i=0;i<data.length;i++){
             MyData.push(new const_usn(data[i][0]));
-        }
-      
+        }      
         resolve(data);
     })
  });

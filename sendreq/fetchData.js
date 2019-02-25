@@ -1,4 +1,5 @@
 const request = require('request');
+const fs = require('fs');
 const fetchData = (cookie,usn,captcha,token)=> {
     var headers  = {
         "Origin": "http://results.vtu.ac.in",
@@ -23,9 +24,14 @@ const fetchData = (cookie,usn,captcha,token)=> {
             headers: headers,
             formData :myJSONObject
         }, function (error, response, body){
-            // if(error) reject(error)
-            // console.log(body)
+            if(error) throw(error)
             resolve(body);
+            // fs.writeFile("html", body, function(err) {
+            //     if(err) {
+            //         return console.log(err);
+            //     }
+            //     console.log("The file was saved!");
+            // }); 
         });
        })
 

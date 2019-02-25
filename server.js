@@ -10,7 +10,8 @@ var storage = multer.diskStorage({
     cb(null, 'fetchusn/')
   },
   filename: function (req, file, cb) {
-    cb(null, Date.now() + '.csv')
+    console.log(file)
+    cb(null, file.originalname)
   }
 })
 
@@ -27,12 +28,21 @@ app.listen(8000, ()=> {
 });
 
 app.post('/extract', upload.any('usn.csv'), (req, res) => {
+    var randomName = Date.now();
+    // console.log("randomName", randomName)
     console.log('req', req.body)
     // console.log('file', req.files[0].filename)
     var captcha = req.body.captcha;
     var cookie = req.body.cookie;
     var csv = req.files[0].filename;
-    console.log("csv in server", csv)
-    index.getAllResults(captcha, cookie, csv);
-    // res.send('done')
+    // console.log("csv in server", csv)
+    index.getAllResults(captcha, cookie, csv)
+      .then((data) => {
+        res.send("initiated");
+        console.log('done')
+      })
+      .catch((data)=> {
+        res.send('failed')
+        console.log('failed')
+      })    
 })
