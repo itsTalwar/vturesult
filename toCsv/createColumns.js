@@ -1,6 +1,6 @@
 const createColumns = (obj, csv) => {
     const fs = require('fs');
-    const writeStream = fs.createWriteStream(`./public/${csv}`,{flags:'a'});
+    const writeStream = fs.createWriteStream(`./public/marks_${csv}`,{flags:'a'});
     console.log("creating columns");
     const usn = obj.usn;
     var subcodes = [];
@@ -13,7 +13,7 @@ const createColumns = (obj, csv) => {
         return aux;
     })
     // console.log("subcodes ", subcodes)
-    writeStream.write(`USN, ${subCodes}\n`)
+    writeStream.write(`USN, Name, ${subCodes}\n`)
     writeStream.end();
 }
 

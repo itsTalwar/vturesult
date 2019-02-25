@@ -27,6 +27,15 @@ const processdata = (html,usn) => {
     var $ = cheerio.load(html);
     var allmarks = [];
     var marks = [];
+    var allInfo = [];
+    $(".col-md-12 .table-responsive").find('td').each((i, el) => {
+        const item = $(el).text();
+        // console.log(item);
+        allInfo.push(item)
+    });
+    // console.log("allInfo", allInfo)
+    var name = allInfo[3].substring(2);
+    // console.log(name);
     $(".divTableCell").each((i, el)=> {
         const item = $(el).text();
         // console.log(item);
@@ -35,6 +44,7 @@ const processdata = (html,usn) => {
     // console.log(allmarks)
     marks = scrape(allmarks);
     var finObj = {
+        name: name,
         usn: usn,
         marks: marks
     }
