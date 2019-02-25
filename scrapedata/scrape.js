@@ -39,31 +39,27 @@ const processdata = (html,usn) => {
     }
     else{
         // console.log('html', html)
-        // console.log("processing dom")
         fs.writeFile("html", html, function(err) {
             if(err) {
                 return console.log(err);
             }
-            console.log("The file was saved!");
+            // console.log("The file was saved!");
         }); 
-        console.log(html)
+        // console.log(html)
         var $ = cheerio.load(html);
         var allmarks = [];
         var marks = [];
         $(".divTableCell").each((i, el)=> {
             const item = $(el).text();
-            console.log(item);
+            // console.log(item);
             allmarks.push(item);
         }) 
-        console.log('allmarks', allmarks)
-        var ends = false;
-        var tempObj = {};
         marks = scrape(allmarks);
         var finObj = {
             usn: usn,
             marks: marks
         }
-        console.log(finObj);
+        // console.log("finObj", finObj);
         return finObj;
     }   
 }

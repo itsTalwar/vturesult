@@ -23,7 +23,8 @@ const fetchData = (cookie,usn,captcha,token)=> {
             headers: headers,
             formData :myJSONObject
         }, function (error, response, body){
-            console.log(body)
+            // if(error) reject(error)
+            // console.log(body)
             resolve(body);
         });
        })
