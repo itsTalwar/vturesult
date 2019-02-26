@@ -1,23 +1,10 @@
 const cheerio  = require('cheerio');
 const request = require('request')
 
-const fs = require('fs');
-
-const captchaErrPatt = `alert('Invalid captcha code !!!')`
-
-function captchaErr(html) {
-    var $ = cheerio.load(html);
-    var index = html.indexOf(captchaErrPatt)
-    if(index == -1){
-        return 0
-    }
-    return 1;
-}
-
 function scrape(allmarks) {
     var marks = [];
-    for(var i = 0; i < allmarks.length; i += 4){
-        if(allmarks[i] === 'Level'){
+    for(var i = 0; i < allmarks.length; i += 6){
+        if(allmarks[i] === 'P -> PASS'){
             return marks
         }
         if(allmarks[i] !== 'Subject Code'){
@@ -25,43 +12,44 @@ function scrape(allmarks) {
                 subCode: allmarks[i],
                 subName: allmarks[i+1],
                 ia: allmarks[i+2],
-                grade: allmarks[i+3],
+                external: allmarks[i+3],
+                total: allmarks[i+4],
+                result: allmarks[i+5],
             }
             marks.push(tempObj);
         }
-    }                 
+    } 
+    return marks;                
 }
 
-const processdata = (html,usn) => {
-    if(captchaErr(html) == 1) {
-        console.log("captcha err")
-        return -1;
+const processdata = (html,usn) => {  
+    // console.log("*************html*************\n",html)  
+    var $ = cheerio.load(html);
+    var allmarks = [];
+    var marks = [];
+    var allInfo = [];
+    $(".col-md-12 .table-responsive").find('td').each((i, el) => {
+        const item = $(el).text();
+        // console.log(item);
+        allInfo.push(item)
+    });
+    // console.log("allInfo", allInfo)
+    var name = allInfo[3].substring(2);
+    // console.log(name);
+    $(".divTableCell").each((i, el)=> {
+        const item = $(el).text();
+        // console.log(item);
+        allmarks.push(item);
+    }) 
+    // console.log(allmarks)
+    marks = scrape(allmarks);
+    var finObj = {
+        name: name,
+        usn: usn,
+        marks: marks
     }
-    else{
-        // console.log('html', html)
-        fs.writeFile("html", html, function(err) {
-            if(err) {
-                return console.log(err);
-            }
-            // console.log("The file was saved!");
-        }); 
-        // console.log(html)
-        var $ = cheerio.load(html);
-        var allmarks = [];
-        var marks = [];
-        $(".divTableCell").each((i, el)=> {
-            const item = $(el).text();
-            // console.log(item);
-            allmarks.push(item);
-        }) 
-        marks = scrape(allmarks);
-        var finObj = {
-            usn: usn,
-            marks: marks
-        }
-        // console.log("finObj", finObj);
-        return finObj;
-    }   
+    // console.log("finObj", finObj);
+    return finObj;  
 }
 
 
