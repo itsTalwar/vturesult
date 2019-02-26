@@ -7,6 +7,8 @@ const createColumns = require('./toCsv/createColumns')
 
 var colCreated = false;
 
+// var token = "UXppRy9tM0tPZFc2dnhSbG4rQWlSb1lDOXZKWnlldEpOSVd6UitURzcyTEd3QUpObmRoRjdaQWlSZnZUbDdoQkc0NkhReUNZNmN6Tk1rREQ2WHNGTEE9PTo63Tc+Fyg/USxz2hDhQLsSMQ==";
+
 const captchaErrPatt = `alert('Invalid captcha code !!!')`
 const redirectErrPatt = `alert('Redirecting to VTU Results Site !!!')`
 
@@ -25,7 +27,7 @@ function reqErr(html) {
     return 1;
 }
 
-const gettingData = (usn, captcha, cookie, csv, token)=>{    
+const gettingData = (usn, captcha, cookie, csv)=>{    
     fetchData.fetchData(cookie,usn,captcha,token)
         .then((data)=>{
             if(reqErr(data) === 0) {
