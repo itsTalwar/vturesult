@@ -34,9 +34,10 @@ app.post('/extract', upload.any('usn.csv'), (req, res) => {
     // console.log('file', req.files[0].filename)
     var captcha = req.body.captcha;
     var cookie = req.body.cookie;
+    var token = req.body.token;
     var csv = req.files[0].filename;
     // console.log("csv in server", csv)
-    index.getAllResults(captcha, cookie, csv)
+    index.getAllResults(captcha, cookie, csv, token)
       .then((data) => {
         res.send("initiated");
         console.log('done')

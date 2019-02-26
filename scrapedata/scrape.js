@@ -34,7 +34,7 @@ const processdata = (html,usn) => {
         // console.log(item);
         allInfo.push(item)
     });
-    console.log("allInfo", allInfo)
+    // console.log("allInfo", allInfo)
     var name = allInfo[3].substring(2);
     // console.log(name);
     $(".divTableCell").each((i, el)=> {
@@ -60,7 +60,6 @@ const processdata = (html,usn) => {
 //     usn = '1AY15CS055'
 //     var res = processdata(body, usn);
 // })
-
 /*****************************************************************************/
 
 module.exports ={
