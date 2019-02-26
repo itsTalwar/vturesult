@@ -18,7 +18,6 @@ const fetchData = (cookie,usn,captcha,token)=> {
     };
     return new Promise(function(resolve, reject) {
         request({
-            // url: "http://results.vtu.ac.in/DecJanExamResults2018/vitaviresultcbcs/resultpage.php",
             url: "http://results.vtu.ac.in/resultsvitavicbcs_19/resultpage.php",
             method: "POST",
             headers: headers,

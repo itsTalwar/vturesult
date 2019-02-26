@@ -24,6 +24,7 @@ function scrape(allmarks) {
 
 const processdata = (html,usn) => {  
     // console.log("*************html*************\n",html)  
+    console.log("++++++++++usn++++++++++++", usn)
     var $ = cheerio.load(html);
     var allmarks = [];
     var marks = [];
@@ -59,7 +60,6 @@ const processdata = (html,usn) => {
 //     usn = '1AY15CS055'
 //     var res = processdata(body, usn);
 // })
-
 /*****************************************************************************/
 
 module.exports ={

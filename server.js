@@ -27,22 +27,34 @@ app.listen(8000, ()=> {
     console.log('app listening at port 8000');
 });
 
+var globalCSV;
+
 app.post('/extract', upload.any('usn.csv'), (req, res) => {
-    var randomName = Date.now();
     // console.log("randomName", randomName)
     console.log('req', req.body)
     // console.log('file', req.files[0].filename)
     var captcha = req.body.captcha;
     var cookie = req.body.cookie;
+    var token = req.body.token;
     var csv = req.files[0].filename;
+    globalCSV = `marks_${csv}`;
+    console.log("global csv ", globalCSV)
     // console.log("csv in server", csv)
-    index.getAllResults(captcha, cookie, csv)
+    index.getAllResults(captcha, cookie, csv, token)
       .then((data) => {
-        res.send("initiated");
+        res.sendFile(path.join(__dirname+'/public/extractSuccessResponse.html'))
         console.log('done')
       })
       .catch((data)=> {
-        res.send('failed')
+        // res.sendFile(path.join(__dirname+'/public/extractFailResponse.html'))
+        res.sendFile(path.join(__dirname+'/public/extractSuccessResponse.html'))
         console.log('failed')
       })    
+})
+
+app.post('/download', (req, res) => {
+  console.log("triggered yo");
+  var file = `${__dirname}/public/${globalCSV}`;
+  res.download(file);
+  globalCSV = null;
 })
