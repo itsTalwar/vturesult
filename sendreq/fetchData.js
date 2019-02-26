@@ -26,12 +26,12 @@ const fetchData = (cookie,usn,captcha,token)=> {
         }, function (error, response, body){
             if(error) throw(error)
             resolve(body);
-            // fs.writeFile("html", body, function(err) {
-            //     if(err) {
-            //         return console.log(err);
-            //     }
-            //     console.log("The file was saved!");
-            // }); 
+            fs.writeFile("html", body, function(err) {
+                if(err) {
+                    return console.log(err);
+                }
+                console.log("The file was saved!");
+            }); 
         });
        })
 

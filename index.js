@@ -7,14 +7,22 @@ const createColumns = require('./toCsv/createColumns')
 
 var colCreated = false;
 
-var token = "T3JMdW5XNzBmbU1mTXZXdDRDeVQweGxCT3RhTSt1NGk4WjUwaHM4VDhzRHpIdWE0cEY4WU9qMU42VENiSFZ3SVV1d05WeG9Jck1YMDQ1cGlmblhWK0E9PTo6RpU3bYO9iWzsN+SOPvMWpA==";
+var token = "UXppRy9tM0tPZFc2dnhSbG4rQWlSb1lDOXZKWnlldEpOSVd6UitURzcyTEd3QUpObmRoRjdaQWlSZnZUbDdoQkc0NkhReUNZNmN6Tk1rREQ2WHNGTEE9PTo63Tc+Fyg/USxz2hDhQLsSMQ==";
 
 const captchaErrPatt = `alert('Invalid captcha code !!!')`
+const redirectErrPatt = `alert('Redirecting to VTU Results Site !!!')`
 
-function captchaErr(html) {
-    var index = html.indexOf(captchaErrPatt)
-    if(index == -1){
+function reqErr(html) {
+    // console.log(html)
+    var index1 = html.indexOf(captchaErrPatt)
+    var index2 = html.indexOf(redirectErrPatt)
+    if(index1 !== -1){
+        console.log("captcha err");
         return 0
+    }
+    else if (index2 !== -1){
+        console.log("redirected")
+        return 0;
     }
     return 1;
 }
@@ -22,8 +30,8 @@ function captchaErr(html) {
 const gettingData = (usn, captcha, cookie, csv)=>{    
     fetchData.fetchData(cookie,usn,captcha,token)
         .then((data)=>{
-            if(captchaErr(data) == 1) {
-                console.log("captcha err")
+            if(reqErr(data) === 0) {
+                console.log("these are troubling times, request err")
             }            
             else {
                 console.log("befofre scraping starts");

@@ -24,6 +24,7 @@ function scrape(allmarks) {
 
 const processdata = (html,usn) => {  
     // console.log("*************html*************\n",html)  
+    console.log("++++++++++usn++++++++++++", usn)
     var $ = cheerio.load(html);
     var allmarks = [];
     var marks = [];
@@ -33,7 +34,7 @@ const processdata = (html,usn) => {
         // console.log(item);
         allInfo.push(item)
     });
-    // console.log("allInfo", allInfo)
+    console.log("allInfo", allInfo)
     var name = allInfo[3].substring(2);
     // console.log(name);
     $(".divTableCell").each((i, el)=> {
