@@ -14,6 +14,7 @@ const addToCsv = (obj, csv) => {
     })
     // console.log("rows", rows)
     writeStream.write(`${usn}, ${name}, ${rows}\n`)
+    writeStream.end();
     console.log("csv entry made")
 }
 

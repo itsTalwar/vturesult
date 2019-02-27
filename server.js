@@ -31,30 +31,34 @@ var globalCSV;
 
 app.post('/extract', upload.any('usn.csv'), (req, res) => {
     // console.log("randomName", randomName)
-    console.log('req', req.body)
+    // console.log('req', req.body)
     // console.log('file', req.files[0].filename)
     var captcha = req.body.captcha;
     var cookie = req.body.cookie;
     var token = req.body.token;
     var csv = req.files[0].filename;
     globalCSV = `marks_${csv}`;
-    console.log("global csv ", globalCSV)
+    // console.log("global csv ", globalCSV)
     // console.log("csv in server", csv)
     index.getAllResults(captcha, cookie, csv, token)
       .then((data) => {
         res.sendFile(path.join(__dirname+'/public/extractSuccessResponse.html'))
         console.log('done')
       })
-      .catch((data)=> {
-        // res.sendFile(path.join(__dirname+'/public/extractFailResponse.html'))
-        res.sendFile(path.join(__dirname+'/public/extractSuccessResponse.html'))
-        console.log('failed')
+      .catch((err)=> {
+        res.sendFile(path.join(__dirname+'/public/extractFailResponse.html'))
+        console.log(err)
       })    
 })
 
-app.post('/download', (req, res) => {
+app.get('/download', (req, res) => {
   console.log("triggered yo");
-  var file = `${__dirname}/public/${globalCSV}`;
-  res.download(file);
+  var file = `${__dirname}\\public\\${globalCSV}`;
+  console.log("file is", file)
   globalCSV = null;
+  res.download(file, (err) => {
+    if(err) throw err;
+    console.log("file sent")
+  });  
+  
 })

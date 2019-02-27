@@ -27,7 +27,7 @@ function reqErr(html) {
     return 1;
 }
 
-const gettingData = (usn, captcha, cookie, csv)=>{    
+const gettingData = (usn, captcha, cookie, csv, token)=>{    
     fetchData.fetchData(cookie,usn,captcha,token)
         .then((data)=>{
             if(reqErr(data) === 0) {
@@ -64,7 +64,8 @@ const getAllResults = (captcha, cookie, csv, token)=> {
                 var temp = usn[i][0];
                 gettingData(temp, captcha, cookie, csv, token);
             }
-            resolve('got results')
+            console.log("got results")
+            resolve(true)
         })
         .catch((err) => {
             console.log("err getting usns");
