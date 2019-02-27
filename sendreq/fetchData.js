@@ -1,6 +1,7 @@
 const request = require('request');
 const fs = require('fs');
 const fetchData = (cookie,usn,captcha,token)=> {
+    // console.log("token received", token)
     var headers  = {
         "Origin": "http://results.vtu.ac.in",
         "Upgrade-Insecure-Requests": 1,
