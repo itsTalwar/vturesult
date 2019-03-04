@@ -18,13 +18,13 @@ const addToDatabase = (obj) => {
                 if (err) throw err;
                 else console.log("1 record inserted");
            });
-           console.log(usn,subCode,ia,ex,tot,result)
+           //console.log(usn,subCode,ia,ex,tot,result)
         })
     })
 }
 
  
-var ob = { name: 'MOHITH L M',
+//var ob = { name: 'MOHITH L M',
   usn: '1ay15cs051',
   marks:
    [ { subCode: '15CS71',
@@ -76,7 +76,7 @@ var ob = { name: 'MOHITH L M',
        total: '82',
        result: 'P' } ] }
 
-addToDatabase(ob);
+//addToDatabase(ob);
 
 module.exports = {
     addToDatabase
