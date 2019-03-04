@@ -1,27 +1,21 @@
-const cheerio  = require('cheerio');
-const request = require('request');
-const scrapeData = require('../scrapedata/scrape.js')
-const addToCsv = (obj) => {
-          console.log("entered");
-         
-        
-
-        const fs = require('fs');
-        const writeStream = fs.createWriteStream('./toCsv/marks.csv',{flags:'a'});
-        const usn = obj.usn;
-        var ia, ex, tot, subCode;
-        obj.marks.map((temp) => {
-            subCode = temp.subCode;
-            ia = temp.ia;
-            ex = temp.ex;
-            tot = temp.tot;
-           
-           writeStream.write(`${usn}, ${temp.subCode}, ${temp.ia}, ${temp.ex}, ${temp.tot}\n`)
-        })
-
-
-
-       
+const addToCsv = (obj, csv) => {
+    // console.log("obj = ",obj )
+    const fs = require('fs');
+    const writeStream = fs.createWriteStream(`./public/marks_${csv}`,{flags:'a'});
+    var usn = obj.usn;
+    var name = obj.name;
+    var rows = [];
+    rows = obj.marks.map((temp) => {
+        var aux = [];
+        aux.push(temp.ia);
+        aux.push(temp.external);
+        aux.push(temp.total);
+        return aux;
+    })
+    // console.log("rows", rows)
+    writeStream.write(`${usn}, ${name}, ${rows}\n`)
+    writeStream.end();
+    console.log("csv entry made")
 }
 
 module.exports = {

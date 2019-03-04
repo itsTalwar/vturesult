@@ -1,61 +1,65 @@
 const cheerio  = require('cheerio');
 const request = require('request')
 
-const captchaErrPatt = `alert('Invalid captcha code !!!')`
-
-function captchaErr(html) {
-    var $ = cheerio.load(html);
-    var index = html.indexOf(captchaErrPatt)
-    if(index == -1){
-        return 0
-    }
-    return 1;
+function scrape(allmarks) {
+    var marks = [];
+    for(var i = 0; i < allmarks.length; i += 6){
+        if(allmarks[i] === 'P -> PASS'){
+            return marks
+        }
+        if(allmarks[i] !== 'Subject Code'){
+            tempObj = {
+                subCode: allmarks[i],
+                subName: allmarks[i+1],
+                ia: allmarks[i+2],
+                external: allmarks[i+3],
+                total: allmarks[i+4],
+                result: allmarks[i+5],
+            }
+            marks.push(tempObj);
+        }
+    } 
+    return marks;                
 }
 
-const processdata = (html,usn) => {
-    if(captchaErr(html) == 1) {
-        console.log("captcha err")
-        return -1;
+const processdata = (html,usn) => {  
+    // console.log("*************html*************\n",html)  
+    console.log("++++++++++usn++++++++++++", usn)
+    var $ = cheerio.load(html);
+    var allmarks = [];
+    var marks = [];
+    var allInfo = [];
+    $(".col-md-12 .table-responsive").find('td').each((i, el) => {
+        const item = $(el).text();
+        // console.log(item);
+        allInfo.push(item)
+    });
+    // console.log("allInfo", allInfo)
+    var name = allInfo[3].substring(2);
+    // console.log(name);
+    $(".divTableCell").each((i, el)=> {
+        const item = $(el).text();
+        // console.log(item);
+        allmarks.push(item);
+    }) 
+    // console.log(allmarks)
+    marks = scrape(allmarks);
+    var finObj = {
+        name: name,
+        usn: usn,
+        marks: marks
     }
-    else{
-        var $ = cheerio.load(html);
-        var allmarks = [];
-        var marks = [];
-        $(".divTableCell").each((i, el)=> {
-            const item = $(el).text();
-            allmarks.push(item);
-        })       
-        var tempObj = {};
-        for(var i = 0; i < allmarks.length; i += 6){
-            if(allmarks[i] !== 'Subject Code' && allmarks[i] !== 'P -> PASS'){
-                tempObj = {
-                    subCode: allmarks[i],
-                    subName: allmarks[i+1],
-                    ia: allmarks[i+2],
-                    ex: allmarks[i+3],
-                    tot: allmarks[i+4],
-                    res: allmarks[i+5]
-                }
-                marks.push(tempObj);
-            }           
-        }
-        var finObj = {
-            usn: usn,
-            marks: marks
-        }
-        console.log(finObj);
-        return finObj;
-    }   
+    // console.log("finObj", finObj);
+    return finObj;  
 }
 
 
 
 //******************************** */test env********************************//
-// html = request('http://localhost/resultSample.html', function (error, response, body) {
-//     usn = '1AY16CS121'
+// html = request('http://localhost/VTU%20Result.html', function (error, response, body) {
+//     usn = '1AY15CS055'
 //     var res = processdata(body, usn);
 // })
-
 /*****************************************************************************/
 
 module.exports ={

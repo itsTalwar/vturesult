@@ -6,13 +6,14 @@ function const_usn(usn){
 }
 
 var MyData =[];
-const usnData =()=>{
+const usnData =(csv)=>{
+    console.log("csv ", csv)
+    var relCsv = `./fetchusn/${csv}`
     return new Promise( (resolve,reject)=> {
-    obj.from.path('usn.csv').to.array((data)=>{
+    obj.from.path(relCsv).to.array((data)=>{
         for(var i=0;i<data.length;i++){
             MyData.push(new const_usn(data[i][0]));
-        }
-      
+        }      
         resolve(data);
     })
  });
