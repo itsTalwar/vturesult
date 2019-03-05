@@ -2,7 +2,7 @@ const env = {
     user : 'root',
     pass: '',
     host: 'localhost',
-    database: 'vtures'
+    database: 'ait_cse_15'
 }
 
 module.exports = {
