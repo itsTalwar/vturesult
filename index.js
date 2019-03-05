@@ -3,11 +3,19 @@ const fetchUSN = require('./fetchusn/retrievecsv.js')
 const scrapeData = require('./scrapedata/scrape.js')
 const addToDatabase = require('./database/addToDatabase')
 const addToCsv = require('./toCsv/addToCsv')
+<<<<<<< HEAD
+const config = require('./database/config.js')
+
+const cookie = "q4im7j9ekre6gcjdg78hbeguu1"; 
+var captcha = 75431;
+var tablename = config.config().dept.cse.batch.b15.sem7.table;
+=======
 const createColumns = require('./toCsv/createColumns')
 
 var colCreated = false;
 
 // var token = "UXppRy9tM0tPZFc2dnhSbG4rQWlSb1lDOXZKWnlldEpOSVd6UitURzcyTEd3QUpObmRoRjdaQWlSZnZUbDdoQkc0NkhReUNZNmN6Tk1rREQ2WHNGTEE9PTo63Tc+Fyg/USxz2hDhQLsSMQ==";
+>>>>>>> 8abd01541ecc20681fbbefe9239ec68ad2a6dc1a
 
 const captchaErrPatt = `alert('Invalid captcha code !!!')`
 const redirectErrPatt = `alert('Redirecting to VTU Results Site !!!')`
@@ -30,6 +38,16 @@ function reqErr(html) {
 const gettingData = (usn, captcha, cookie, csv, token)=>{    
     fetchData.fetchData(cookie,usn,captcha,token)
         .then((data)=>{
+<<<<<<< HEAD
+            var obj = scrapeData.processdata(data,usn);
+            if(obj === -1){
+                console.log("something went wrong")
+            }
+            else{
+                try{
+                    addToDatabase.addToDatabase(obj,tablename);
+                    addToCsv.addToCsv(obj);
+=======
             if(reqErr(data) === 0) {
                 console.log("these are troubling times, request err")
             }            
@@ -44,6 +62,7 @@ const gettingData = (usn, captcha, cookie, csv, token)=>{
                 try {
                     // addToDatabase.addToDatabase(obj);
                     addToCsv.addToCsv(obj, csv);
+>>>>>>> 8abd01541ecc20681fbbefe9239ec68ad2a6dc1a
                 }
                 catch(err) {
                     throw err;
@@ -80,6 +99,13 @@ const getAllResults = (captcha, cookie, csv, token)=> {
 // getAllResults(captcha, cookie, token)
 
 
+<<<<<<< HEAD
+
+   
+
+getAllResults();
+=======
 module.exports = {
     getAllResults
 }
+>>>>>>> 8abd01541ecc20681fbbefe9239ec68ad2a6dc1a
