@@ -33,14 +33,15 @@ app.post('/extract', upload.any('usn.csv'), (req, res) => {
     // console.log("randomName", randomName)
     // console.log('req', req.body)
     // console.log('file', req.files[0].filename)
-    var captcha = req.body.captcha;
-    var cookie = req.body.cookie;
-    var token = req.body.token;
-    var csv = req.files[0].filename;
+    const captcha = req.body.captcha;
+    const cookie = req.body.cookie;
+    const token = req.body.token;
+    const csv = req.files[0].filename;
+    const year = req.body.year;
     globalCSV = `marks_${csv}`;
     // console.log("global csv ", globalCSV)
     // console.log("csv in server", csv)
-    index.getAllResults(captcha, cookie, csv, token)
+    index.getAllResults(captcha, cookie, csv, token, year)
       .then((data) => {
         res.sendFile(path.join(__dirname+'/public/extractSuccessResponse.html'))
         console.log('done')

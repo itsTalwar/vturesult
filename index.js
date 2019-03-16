@@ -27,8 +27,9 @@ function reqErr(html) {
     return 1;
 }
 
-const gettingData = (usn, captcha, cookie, csv, token)=>{    
-    fetchData.fetchData(cookie,usn,captcha,token)
+const gettingData = (usn, captcha, cookie, csv, token, year)=>{ 
+    // console.log("yearin index", year)   
+    fetchData.fetchData(cookie,usn,captcha,token,year)
         .then((data)=>{
             if(reqErr(data) === 0) {
                 console.log("these are troubling times, request err")
@@ -56,13 +57,13 @@ const gettingData = (usn, captcha, cookie, csv, token)=>{
         })
 }
 
-const getAllResults = (captcha, cookie, csv, token)=> {
+const getAllResults = (captcha, cookie, csv, token, year)=> {
     return new Promise((resolve, reject) => {
         fetchUSN.usnArray(csv)
         .then((usn)=>{
             for(var i = 0 ; i < usn.length ; i++){
                 var temp = usn[i][0];
-                gettingData(temp, captcha, cookie, csv, token);
+                gettingData(temp, captcha, cookie, csv, token, year);
             }
             console.log("got results")
             resolve(true)
