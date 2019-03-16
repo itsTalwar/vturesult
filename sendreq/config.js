@@ -14,7 +14,8 @@ const config = (cookie, captcha, usn, token) => {
                 "lns":usn,
                 "token": token,
                 "current_url": "http://results.vtu.ac.in/resultsvitavicbcs_19/index.php"
-            }
+            },
+            url: "http://results.vtu.ac.in/resultsvitavicbcs_19/resultpage.php"
         }
     }
 }

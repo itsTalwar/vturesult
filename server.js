@@ -3,7 +3,8 @@ const app = express();
 const bodyParser = require('body-parser');
 const index = require('./index');
 const path = require('path');
-var multer = require('multer');
+const multer = require('multer');
+const fs = require('fs')
 
 var storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -60,6 +61,9 @@ app.get('/download', (req, res) => {
   res.download(file, (err) => {
     if(err) throw err;
     console.log("file sent")
+    fs.unlink(file, (err) => {
+      if (err) throw err;
+      console.log('File deleted!');
+    }); 
   });  
-  
 })
