@@ -32,12 +32,7 @@ var globalCSV;
 
 app.post('/extract', upload.any('usn.csv'), (req, res) => {
     const frontData = {
-      captcha : req.body.captcha,
-      cookie : req.body.cookie,
-      token : req.body.token,
-      year : req.body.year,
-      dept : req.body.dept,
-      batch : req.body.batch,
+      ...req.body,
       csv : req.files[0].filename,
     }
     globalCSV = `marks_${frontData.csv}`;

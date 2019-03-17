@@ -6,9 +6,6 @@ const fetchData = (usn, frontData)=> {
     var headers  = obj[frontData.year].headers;
     var body = obj[frontData.year].body;
     var url = obj[frontData.year].url;
-    console.log("headers", headers);
-    console.log("body", body);
-    console.log("url", url);
     return new Promise(function(resolve, reject) {
         request({
             url: url,
