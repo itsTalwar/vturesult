@@ -27,9 +27,9 @@ function reqErr(html) {
     return 1;
 }
 
-const gettingData = (usn, captcha, cookie, csv, token, year)=>{ 
+const gettingData = (usn, frontData)=>{ 
     // console.log("yearin index", year)   
-    fetchData.fetchData(cookie,usn,captcha,token,year)
+    fetchData.fetchData(usn, frontData)
         .then((data)=>{
             if(reqErr(data) === 0) {
                 console.log("these are troubling times, request err")
@@ -39,12 +39,12 @@ const gettingData = (usn, captcha, cookie, csv, token, year)=>{
                 var obj = scrapeData.processdata(data,usn);
                 // console.log("obj in index ", obj)
                 if(colCreated === false){
-                    createColumns.createColumns(obj, csv);
+                    createColumns.createColumns(obj, frontData.csv);
                     colCreated = true;
                 }
                 try {
                     // addToDatabase.addToDatabase(obj);
-                    addToCsv.addToCsv(obj, csv);
+                    addToCsv.addToCsv(obj, frontData.csv);
                 }
                 catch(err) {
                     throw err;
@@ -52,18 +52,17 @@ const gettingData = (usn, captcha, cookie, csv, token, year)=>{
             }               
         })
         .catch((err) => {
-            // throw(err);
             console.log(err)
         })
 }
 
-const getAllResults = (captcha, cookie, csv, token, year)=> {
+const getAllResults = (frontData)=> {
     return new Promise((resolve, reject) => {
-        fetchUSN.usnArray(csv)
+        fetchUSN.usnArray(frontData.csv)
         .then((usn)=>{
             for(var i = 0 ; i < usn.length ; i++){
                 var temp = usn[i][0];
-                gettingData(temp, captcha, cookie, csv, token, year);
+                gettingData(temp, frontData);
             }
             console.log("got results")
             resolve(true)
@@ -75,11 +74,6 @@ const getAllResults = (captcha, cookie, csv, token, year)=> {
     })
         
 }
-
-// const cookie = "ou76eorctub9v9m42tp7pd9di3"; 
-// var captcha = 97265;
-// getAllResults(captcha, cookie, token)
-
 
 module.exports = {
     getAllResults

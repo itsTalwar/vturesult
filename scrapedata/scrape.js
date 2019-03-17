@@ -53,8 +53,6 @@ const processdata = (html,usn) => {
     return finObj;  
 }
 
-
-
 //******************************** */test env********************************//
 // html = request('http://localhost/VTU%20Result.html', function (error, response, body) {
 //     usn = '1AY15CS055'

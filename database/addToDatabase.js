@@ -6,12 +6,14 @@ const addToDatabase = (obj) => {
     con.connect((err) => {
         if(err) throw err
         const usn = obj.usn;
-        var ia, ex, tot, subCode;
+        var ia, ex, total, subCode;
         obj.marks.map((temp) => {
             subCode = temp.subCode;
             ia = temp.ia;
+            ex = temp.ex;
+            total = temp.tot;
             grade = temp.grade;
-            var sql = `INSERT INTO marks VALUES ('${usn}','${subCode}','${ia}','${grade}')`;
+            var sql = `INSERT INTO 7sem VALUES ('${usn}','${subCode}','${ia}', '${ex}','${total}','${grade}')`;
             con.query(sql, (err, result) => {
                 if (err) throw err;
                 else console.log("1 record inserted");
@@ -19,7 +21,6 @@ const addToDatabase = (obj) => {
         })
     })
 }
-
 // addToDatabase()
 
 module.exports = {
