@@ -14,40 +14,42 @@ const addToDatabase = (obj, frontData) => {
         const usn = obj.usn;
         var ia, ex, total, subCode;
         obj.marks.map((temp) => {
-            console.log("temp", temp)
-            subCode = temp.subCode;
-            ia = temp.ia;
-            ex = temp.external;
-            total = temp.total;
-            grade = temp.result;
             var sql = `SHOW TABLES LIKE '${tableName}';`
             con.query(sql, (err, result)=>{
+                console.log("temp", temp)
+                subCode = temp.subCode;
+                ia = temp.ia;
+                ex = temp.external;
+                total = temp.total;
+                grade = temp.result;
                 if(err) throw err;
                 else if(result.length === 0){
                     console.log("****************creating table**************");
                     createTable.createTable(con, frontData)
                         .then((data) => {
-                            var sql = `INSERT INTO ${tableName} VALUES ('${usn}','${subCode}','${ia}', '${ex}','${total}','${grade}')`;
+                            console.log("data", data)
+                            sql = `INSERT INTO ${tableName} VALUES ('${usn}','${subCode}','${ia}', '${ex}','${total}','${grade}')`;
+                            console.log("query", sql)
                             con.query(sql, (err, result) => {
                                 if(err) console.log(err);
-                                console.log("1 record inserted");                
+                                console.log("1 record inserted after creation of table");                
                             })
                         })
                         .catch((err) => console.log(err))
                 }
                 else {
-                    var sql = `INSERT INTO ${tableName} VALUES ('${usn}','${subCode}','${ia}', '${ex}','${total}','${grade}')`;
+                    console.log("subcode in sql call", subCode)
+                    sql = `INSERT INTO ${tableName} VALUES ('${usn}','${subCode}','${ia}', '${ex}','${total}','${grade}')`;
                     con.query(sql, (err, result) => {
                         if(err) console.log(err);
-                        console.log("1 record inserted");                
+                        console.log("query", sql)
+                        console.log("1 record inserted on already existing table");                
                     })
-                }
-                
+                }                
             })
         })
     })
 }
-// addToDatabase()
 
 module.exports = {
     addToDatabase
