@@ -14,7 +14,7 @@
       <form action="http://localhost:8000/extract" method="POST" enctype="multipart/form-data">
           <div class="container">            
             <div class="form-group">
-              <label for="captcha" ></label>Captcha:</label>
+              Captcha:
               <input type="text" class="form-control" placeholder="Enter captcha" name="captcha" required>
             </div>
             <div class="form-group">
@@ -29,6 +29,18 @@
               <label for="year">Year:</label>
               <input type="text" class="form-control" placeholder="Enter Year" name="year" required>
             </div>
+            <div class="form-group">
+              <label for="dept">Department:</label>
+              <input type="text" class="form-control" placeholder="Enter Department" name="dept" required>
+            </div>
+            <div class="form-group">
+              <label for="batch">Batch:</label>
+              <input type="text" class="form-control" placeholder="Enter Batch" name="batch" required>
+            </div>
+            <div class="form-group">
+              <label for="sem">Sem:</label>
+              <input type="text" class="form-control" placeholder="Enter Sem" name="sem" required>
+            </div>
             <div class="input-group">
               <div class="input-group-prepend">
                 <span class="input-group-text" id="inputGroupFileAddon01">Upload</span>
@@ -39,7 +51,7 @@
               </div>
             </div>
             <div class="form-group" align="center">
-            <button type="submit" class="btn btn-primary cButton">submit</button>
+            <button type="submit" class="btn btn-primary cButton">Submit</button>
             </div>
           </div>
       </form>

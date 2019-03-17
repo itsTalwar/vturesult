@@ -31,18 +31,12 @@ app.listen(8000, ()=> {
 var globalCSV;
 
 app.post('/extract', upload.any('usn.csv'), (req, res) => {
-    // console.log("randomName", randomName)
-    // console.log('req', req.body)
-    // console.log('file', req.files[0].filename)
-    const captcha = req.body.captcha;
-    const cookie = req.body.cookie;
-    const token = req.body.token;
-    const csv = req.files[0].filename;
-    const year = req.body.year;
-    globalCSV = `marks_${csv}`;
-    // console.log("global csv ", globalCSV)
-    // console.log("csv in server", csv)
-    index.getAllResults(captcha, cookie, csv, token, year)
+    const frontData = {
+      ...req.body,
+      csv : req.files[0].filename,
+    }
+    globalCSV = `marks_${frontData.csv}`;
+    index.getAllResults(frontData)
       .then((data) => {
         res.sendFile(path.join(__dirname+'/public/extractSuccessResponse.html'))
         console.log('done')
@@ -56,7 +50,7 @@ app.post('/extract', upload.any('usn.csv'), (req, res) => {
 app.get('/download', (req, res) => {
   console.log("triggered yo");
   var file = `${__dirname}\\public\\${globalCSV}`;
-  console.log("file is", file)
+  // console.log("file is", file)
   globalCSV = null;
   res.download(file, (err) => {
     if(err) throw err;

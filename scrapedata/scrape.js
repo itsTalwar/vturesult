@@ -31,10 +31,10 @@ const processdata = (html,usn) => {
     var allInfo = [];
     $(".col-md-12 .table-responsive").find('td').each((i, el) => {
         const item = $(el).text();
-        console.log(item);
+        // console.log(item);
         allInfo.push(item)
     });
-    console.log("allInfo", allInfo)
+    // console.log("allInfo", allInfo)
     var name = allInfo[3].substring(2);
     // console.log(name);
     $(".divTableCell").each((i, el)=> {
@@ -49,11 +49,9 @@ const processdata = (html,usn) => {
         usn: usn,
         marks: marks
     }
-    console.log("finObj", finObj);
+    // console.log("finObj", finObj);
     return finObj;  
 }
-
-
 
 //******************************** */test env********************************//
 // html = request('http://localhost/VTU%20Result.html', function (error, response, body) {
