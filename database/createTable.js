@@ -15,8 +15,7 @@ const createTable = (con, frontData) => {
                 resolve("database set up")                            
             });
         });
-    })
-    
+    })    
 }
 
 module.exports = {

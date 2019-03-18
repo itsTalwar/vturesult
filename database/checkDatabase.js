@@ -16,9 +16,8 @@ const checkDatabase = (databaseName, tableName) => {
                     resolve("database checked")
                 })
             })
-        })
-    })
-    
+        }) 
+    })    
 }
 
 module.exports = {
