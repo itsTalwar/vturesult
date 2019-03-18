@@ -1,7 +1,6 @@
 const mysql = require('mysql');
 const env = require('../env')
 const config = require('./config')
-const createTable = require('./createTable')
 
 const addToDatabase = (obj, frontData) => {
     var con = env.env;
@@ -23,27 +22,27 @@ const addToDatabase = (obj, frontData) => {
                 total = temp.total;
                 grade = temp.result;
                 if(err) throw err;
-                else if(result.length === 0){
-                    console.log("****************creating table**************");
-                    createTable.createTable(con, frontData)
-                        .then((data) => {
-                            console.log("data", data)
-                            sql = `INSERT INTO ${tableName} VALUES ('${usn}','${subCode}','${ia}', '${ex}','${total}','${grade}')`;
-                            console.log("query", sql)
-                            con.query(sql, (err, result) => {
-                                if(err) console.log(err);
-                                console.log("1 record inserted after creation of table");                
-                            })
-                        })
-                        .catch((err) => console.log(err))
-                }
+                // else if(result.length === 0){
+                //     console.log("****************creating table**************");
+                //     createTable.createTable(con, frontData)
+                //         .then((data) => {
+                //             console.log("data", data)
+                //             sql = `INSERT INTO ${tableName} VALUES ('${usn}','${subCode}','${ia}', '${ex}','${total}','${grade}')`;
+                //             // console.log("query", sql)
+                //             con.query(sql, (err, result) => {
+                //                 if(err) console.log(err);
+                //                 console.log("1 record inserted after creation of table");                
+                //             })
+                //         })
+                //         .catch((err) => console.log(err))
+                // }
                 else {
-                    console.log("subcode in sql call", subCode)
+                    // console.log("subcode in sql call", subCode)
                     sql = `INSERT INTO ${tableName} VALUES ('${usn}','${subCode}','${ia}', '${ex}','${total}','${grade}')`;
                     con.query(sql, (err, result) => {
                         if(err) console.log(err);
-                        console.log("query", sql)
-                        console.log("1 record inserted on already existing table");                
+                        // console.log("query", sql)
+                        console.log("1 record inserted");                
                     })
                 }                
             })
@@ -54,3 +53,4 @@ const addToDatabase = (obj, frontData) => {
 module.exports = {
     addToDatabase
 }
+	
