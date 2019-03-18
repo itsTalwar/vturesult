@@ -1,15 +1,19 @@
+#nav {
+    margin-bottom: 5%
+}
+
 .main { 
-    position: absolute;
     left: 0;
     right: 0;
     top: 0;
     bottom: 0; 
     margin: auto;
+    padding-top: 1px;
     background-color: rgb(238, 238, 238);
     box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
     border-radius: 1%;   
     width: 50%;
-    height: 100%;
+    height: wrap;
 }
 
 .responseMessage {

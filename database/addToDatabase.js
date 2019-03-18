@@ -16,7 +16,7 @@ const addToDatabase = (obj, frontData) => {
         obj.marks.map((temp) => {
             var sql = `SHOW TABLES LIKE '${tableName}';`
             con.query(sql, (err, result)=>{
-                console.log("temp", temp)
+                // console.log("temp", temp)
                 subCode = temp.subCode;
                 ia = temp.ia;
                 ex = temp.external;
