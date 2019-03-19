@@ -6,6 +6,7 @@ const addToCsv = require('./toCsv/addToCsv')
 const createColumns = require('./toCsv/createColumns')
 const checkDatabase = require('./database/checkDatabase')
 const databaseConfig = require('./database/config')
+const checkTable = require('./database/checkTable')
 
 var colCreated = false;
 var databaseChecked = false;
@@ -57,24 +58,32 @@ const gettingData = (usn, frontData)=>{
 }
 
 const getAllResults = (frontData)=> {
-    return checkDatabase.checkDatabase(databaseConfig.resolveDbName(frontData), databaseConfig.resolveTableName(frontData))
+    var dbName = databaseConfig.resolveDbName(frontData);
+    var tableName = databaseConfig.resolveTableName(frontData)
+    return checkDatabase.checkDatabase(dbName, tableName)
         .then((data) => {
             console.log("data fron check dtabase", data)
-            return new Promise((resolve, reject) => {
-                fetchUSN.usnArray(frontData.csv)
-                    .then((usn)=>{
-                        for(var i = 0 ; i < usn.length ; i++){
-                            var temp = usn[i][0];
-                            gettingData(temp, frontData);
-                        }
-                        console.log("got results")
-                        resolve(true)
-                    })
-                    .catch((err) => {
-                        console.log("err getting usns");
-                        reject(err)
+            return checkTable.checkTable(frontData)
+                .then((data) => {
+                    console.log("data fron checkTable", data)
+                    return new Promise((resolve, reject) => {
+                        fetchUSN.usnArray(frontData.csv)
+                            .then((usn)=>{
+                                for(var i = 0 ; i < usn.length ; i++){
+                                    var temp = usn[i][0];
+                                    gettingData(temp, frontData);
+                                }
+                                console.log("got results")
+                                resolve(true)
+                            })
+                            .catch((err) => {
+                                console.log("err getting usns");
+                                reject(err)
+                        })
+                    })        
                 })
-            })        
+                .catch((err) => {throw err})
+            
         })
         .catch((err) => {throw err});
     
